@@ -12,11 +12,6 @@ namespace modelo
 
         public DateTime? FechaCanje { get; set; }
 
-        // Se relaciona con Cliente
-        // Hace falta crear esa class
-        // public Cliente Cliente { get; set; }
-
-        // Se relaciona con Articulo
         public Articulo Articulo { get; set; }
     }
 }
