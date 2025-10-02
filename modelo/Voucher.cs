@@ -12,6 +12,7 @@ namespace modelo
 
         public DateTime? FechaCanje { get; set; }
 
+        public Cliente Cliente { get; set; }
         public Articulo Articulo { get; set; }
     }
 }

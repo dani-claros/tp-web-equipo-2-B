@@ -19,7 +19,7 @@ namespace negocio
 
         public AccesoDatos()
         {
-            connection = new SqlConnection("Server=localhost,1433;Database=CATALOGO_P3_DB;User Id=sa;Password=BaseDeDatos#2;TrustServerCertificate=True;Integrated Security=False;");
+            connection = new SqlConnection("Server=localhost,1433;Database=PROMOS_DB;User Id=sa;Password=BaseDeDatos#2;TrustServerCertificate=True;Integrated Security=False;");
             command = new SqlCommand();
         }
 

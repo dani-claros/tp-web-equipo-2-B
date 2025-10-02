@@ -14,7 +14,7 @@
                 <br />
 
                 <asp:Button ID="btnValidar" runat="server" CssClass="btn btn-primary" 
-                            Text="Siguiente"  />
+                            Text="Siguiente" onClick="btnValidar_Click"/>
                 <br />
                  <asp:RequiredFieldValidator ID="rfvVoucher" runat="server" ControlToValidate="txtVoucher" ErrorMessage="El código es obligatorio." CssClass="text-danger" Display="Dynamic" />
 
