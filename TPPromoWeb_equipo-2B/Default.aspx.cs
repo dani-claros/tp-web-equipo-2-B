@@ -9,7 +9,8 @@ namespace TPPromoWeb_equipo_2B
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Session["Voucher"] = null;
+            Session["CodigoIngresado"] = null;
         }
 
         protected void btnValidar_Click(object sender, EventArgs e)
