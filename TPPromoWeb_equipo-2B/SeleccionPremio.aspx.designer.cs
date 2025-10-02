@@ -24,15 +24,6 @@ namespace TPPromoWeb_equipo_2B
         protected global::System.Web.UI.WebControls.Label lblCodigoVoucher;
 
         /// <summary>
-        /// lblIdCliente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIdCliente;
-
-        /// <summary>
         /// lblFechaCanje control.
         /// </summary>
         /// <remarks>
@@ -42,6 +33,78 @@ namespace TPPromoWeb_equipo_2B
         protected global::System.Web.UI.WebControls.Label lblFechaCanje;
 
         /// <summary>
+        /// lblIdCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIdCliente;
+
+        /// <summary>
+        /// lblNombreCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNombreCliente;
+
+        /// <summary>
+        /// lblApellidoCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblApellidoCliente;
+
+        /// <summary>
+        /// lblDocumentoCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDocumentoCliente;
+
+        /// <summary>
+        /// lblEmailCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmailCliente;
+
+        /// <summary>
+        /// lblDireccionCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDireccionCliente;
+
+        /// <summary>
+        /// lblCiudadCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCiudadCliente;
+
+        /// <summary>
+        /// lblCPCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCPCliente;
+
+        /// <summary>
         /// lblIdArticulo control.
         /// </summary>
         /// <remarks>
@@ -49,5 +112,50 @@ namespace TPPromoWeb_equipo_2B
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblIdArticulo;
+
+        /// <summary>
+        /// lblNombreArticulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNombreArticulo;
+
+        /// <summary>
+        /// lblDescripcionArticulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDescripcionArticulo;
+
+        /// <summary>
+        /// lblPrecioArticulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPrecioArticulo;
+
+        /// <summary>
+        /// lblMarcaArticulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMarcaArticulo;
+
+        /// <summary>
+        /// lblCategoriaArticulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCategoriaArticulo;
     }
 }

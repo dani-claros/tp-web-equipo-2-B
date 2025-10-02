@@ -11,7 +11,7 @@
             <section class="col-md-6 offset-md-3 text-center">
                 <h1 id="invalidVoucherTitle" class="text-danger">⚠ Código Inválido</h1>
                <p class="lead">
-                El código "<%= this.Codigo %>" que ingresaste no es válido.
+                El código "<%=Codigo %>" que ingresaste no es válido.
                     </p>
                 <p>Por favor, verificá el número y volvé a intentarlo.</p>
 
