@@ -9,76 +9,21 @@
     <main>
         <h2>Detalle del Voucher</h2>
 
-        <table class="table table-bordered">
-            <!-- Voucher -->
-            <tr>
-                <th>Código Voucher</th>
-                <td><asp:Label ID="lblCodigoVoucher" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Fecha de Canje</th>
-                <td><asp:Label ID="lblFechaCanje" runat="server" /></td>
-            </tr>
+       <div class="card" style="width: 18rem;">
+    <!-- Imagen -->
+    <asp:Image ID="imgArticulo" runat="server" CssClass="card-img-top" AlternateText="Imagen del artículo" />
 
-            <!-- Cliente -->
-            <tr>
-                <th>ID Cliente</th>
-                <td><asp:Label ID="lblIdCliente" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Nombre Cliente</th>
-                <td><asp:Label ID="lblNombreCliente" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Apellido Cliente</th>
-                <td><asp:Label ID="lblApellidoCliente" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Documento</th>
-                <td><asp:Label ID="lblDocumentoCliente" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td><asp:Label ID="lblEmailCliente" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Dirección</th>
-                <td><asp:Label ID="lblDireccionCliente" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Ciudad</th>
-                <td><asp:Label ID="lblCiudadCliente" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Código Postal</th>
-                <td><asp:Label ID="lblCPCliente" runat="server" /></td>
-            </tr>
+    <div class="card-body">
+        <!-- Título -->
+        <asp:Label ID="lblTitulo" runat="server" CssClass="card-title h5"></asp:Label>
+        
+        <!-- Texto -->
+        <asp:Label ID="lblDescripcion" runat="server" CssClass="card-text d-block"></asp:Label>
 
-            <!-- Artículo -->
-            <tr>
-                <th>ID Artículo</th>
-                <td><asp:Label ID="lblIdArticulo" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Nombre Artículo</th>
-                <td><asp:Label ID="lblNombreArticulo" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Descripción</th>
-                <td><asp:Label ID="lblDescripcionArticulo" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Precio</th>
-                <td><asp:Label ID="lblPrecioArticulo" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Marca</th>
-                <td><asp:Label ID="lblMarcaArticulo" runat="server" /></td>
-            </tr>
-            <tr>
-                <th>Categoría</th>
-                <td><asp:Label ID="lblCategoriaArticulo" runat="server" /></td>
-            </tr>
-        </table>
+        <!-- Botón -->
+        <asp:HyperLink ID="lnkAccion" runat="server" CssClass="btn btn-primary" Text="Ver más" />
+    </div>
+</div>
+
     </main>
 </asp:Content>
