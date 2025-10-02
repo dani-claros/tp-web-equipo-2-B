@@ -9,6 +9,7 @@ namespace TPPromoWeb_equipo_2B
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Validacion por si llegas a haber ingresado el codigo y volves a la pagina principal, se elimina la informacion de Session Del voucher
             Session["Voucher"] = null;
             Session["CodigoIngresado"] = null;
         }

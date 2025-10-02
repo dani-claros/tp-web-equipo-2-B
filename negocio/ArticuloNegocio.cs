@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace negocio
 {
-    internal class ArticuloNegocio
+    public class ArticuloNegocio
     {
         public List<Articulo> Listar()
         {
@@ -15,8 +15,7 @@ namespace negocio
             {
                 datos.setearConsulta(@"SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, 
                                               M.Descripcion as Marca, 
-                                              C.Descripcion as Categoria, 
-                                              A.ImagenUrl, A.Precio 
+                                              C.Descripcion as Categoria, A.Precio 
                                        FROM ARTICULOS A 
                                        INNER JOIN MARCAS M ON A.IdMarca = M.Id 
                                        INNER JOIN CATEGORIAS C ON A.IdCategoria = C.Id");
@@ -24,6 +23,7 @@ namespace negocio
 
                 while (datos.Lector.Read())
                 {
+                    /**/
                     Articulo aux = new Articulo();
 
                     aux.Id = (int)datos.Lector["Id"];

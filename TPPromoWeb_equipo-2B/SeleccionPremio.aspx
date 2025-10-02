@@ -7,23 +7,52 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <main>
-        <h2>Detalle del Voucher</h2>
-
-       <div class="card" style="width: 18rem;">
-    <!-- Imagen -->
-    <asp:Image ID="imgArticulo" runat="server" CssClass="card-img-top" AlternateText="Imagen del artículo" />
-
-    <div class="card-body">
-        <!-- Título -->
-        <asp:Label ID="lblTitulo" runat="server" CssClass="card-title h5"></asp:Label>
+        <h2>Selecciona Tu Articulo:  </h2>
+  
         
-        <!-- Texto -->
-        <asp:Label ID="lblDescripcion" runat="server" CssClass="card-text d-block"></asp:Label>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            
+            <asp:Repeater ID="repArticulos" runat="server">
+                <ItemTemplate>
 
-        <!-- Botón -->
-        <asp:HyperLink ID="lnkAccion" runat="server" CssClass="btn btn-primary" Text="Ver más" />
-    </div>
-</div>
+                    <%int contador = 0; %>
+                    <div class="col">
+                        <div class="card" style="width: 18rem;">
+                            <!-- Imagen -->
+                   <asp:ImageButton ID="imgArticulo" 
+                                    runat="server" 
+                                    ImageUrl='<%# ((List<modelo.Imagen>)Eval("Imagenes")).Count > 0 
+                                                ? ((List<modelo.Imagen>)Eval("Imagenes"))[0].ImagenURL 
+                                                : "https://distribuidoramiyi.com.ar/products/no_product.png" %>'
+                                    CssClass="card-img-top img-fluid"
+                                    style="object-fit: contain; height: 200px; background-color: #f8f9fa;" 
+                                     />
 
+                            <div class="card-body">
+                                <!-- Título -->
+                                <h5 class="card-title"><%# Eval("Nombre") %></h5>
+                                  <!-- Marca -->
+                                 <p class="h5"><%# Eval("Marca.Descripcion") %></p>
+                                <!-- Categoría -->
+                                <p class="h6"><%# Eval("Categoria.Descripcion") %></p>
+                          
+                                <!-- Descripción -->
+                                <p class="card-text"><%# Eval("Descripcion") %></p>
+
+                                <!-- Botón ASP.NET -->
+                                <asp:Button ID="btnSeleccionar" 
+                                            runat="server" 
+                                            Text="Seleccionar" 
+                                            CssClass="btn btn-primary"
+                                            CommandName="Seleccionar"
+                                            CommandArgument='<%# Eval("Id") %>' />
+                            </div>
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+        </div>
+           
+      
     </main>
 </asp:Content>
