@@ -37,14 +37,35 @@ namespace TPPromoWeb_equipo_2B
                 }
             }
         }
-        protected void repArticulos_ItemCommand(object source, RepeaterCommandEventArgs e)
+        protected string GetCarouselItems(modelo.Articulo articulo)
         {
-            if (e.CommandName == "ImagenClick")
+            var sb = new System.Text.StringBuilder();
+
+            if (articulo.Imagenes != null && articulo.Imagenes.Count > 0)
             {
-                int idArticulo = Convert.ToInt32(e.CommandArgument);
-                // acá resolvés el artículo clickeado
-                Response.Write("Hiciste click en el artículo con ID: " + idArticulo);
+                for (int i = 0; i < articulo.Imagenes.Count; i++)
+                {
+                    var img = articulo.Imagenes[i];
+                    string activeClass = (i == 0) ? "active" : "";
+
+                    sb.Append($@"
+                <div class='carousel-item {activeClass}'>
+                    <img src='{img.ImagenURL}' class='d-block w-100' style='object-fit:contain; height:200px; background-color:#f8f9fa;' alt='Imagen {i + 1}' />
+                </div>");
+                }
             }
+            else
+            {
+                sb.Append($@"
+            <div class='carousel-item active'>
+                <img src='https://distribuidoramiyi.com.ar/products/no_product.png' 
+                     class='d-block w-100' 
+                     style='object-fit:contain; height:200px; background-color:#f8f9fa;' 
+                     alt='Sin imagen' />
+            </div>");
+            }
+
+            return sb.ToString();
         }
     }
 }

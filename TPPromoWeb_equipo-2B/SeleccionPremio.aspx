@@ -13,44 +13,39 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             
             <asp:Repeater ID="repArticulos" runat="server">
-                <ItemTemplate>
-
-                    <%int contador = 0; %>
-                    <div class="col">
-                        <div class="card" style="width: 18rem;">
-                            <!-- Imagen -->
-                   <asp:ImageButton ID="imgArticulo" 
-                                    runat="server" 
-                                    ImageUrl='<%# ((List<modelo.Imagen>)Eval("Imagenes")).Count > 0 
-                                                ? ((List<modelo.Imagen>)Eval("Imagenes"))[0].ImagenURL 
-                                                : "https://distribuidoramiyi.com.ar/products/no_product.png" %>'
-                                    CssClass="card-img-top img-fluid"
-                                    style="object-fit: contain; height: 200px; background-color: #f8f9fa;" 
-                                     />
-
-                            <div class="card-body">
-                                <!-- Título -->
-                                <h5 class="card-title"><%# Eval("Nombre") %></h5>
-                                  <!-- Marca -->
-                                 <p class="h5"><%# Eval("Marca.Descripcion") %></p>
-                                <!-- Categoría -->
-                                <p class="h6"><%# Eval("Categoria.Descripcion") %></p>
-                          
-                                <!-- Descripción -->
-                                <p class="card-text"><%# Eval("Descripcion") %></p>
-
-                                <!-- Botón ASP.NET -->
-                                <asp:Button ID="btnSeleccionar" 
-                                            runat="server" 
-                                            Text="Seleccionar" 
-                                            CssClass="btn btn-primary"
-                                            CommandName="Seleccionar"
-                                            CommandArgument='<%# Eval("Id") %>' />
-                            </div>
-                        </div>
+    <ItemTemplate>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                
+                <!-- Carrusel de imágenes -->
+                <div id="carousel_<%# Eval("Id") %>" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <%# GetCarouselItems((modelo.Articulo)Container.DataItem) %>
                     </div>
-                </ItemTemplate>
-            </asp:Repeater>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel_<%# Eval("Id") %>" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel_<%# Eval("Id") %>" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title"><%# Eval("Nombre") %></h5>
+                    <p class="h5"><%# Eval("Marca.Descripcion") %></p>
+                    <p class="h6"><%# Eval("Categoria.Descripcion") %></p>
+                    <p class="card-text"><%# Eval("Descripcion") %></p>
+                    <asp:Button ID="btnSeleccionar" 
+                                runat="server" 
+                                Text="Seleccionar" 
+                                CssClass="btn btn-primary"
+                                CommandName="Seleccionar"
+                                CommandArgument='<%# Eval("Id") %>' />
+                </div>
+            </div>
+        </div>
+    </ItemTemplate>
+</asp:Repeater>
         </div>
            
       
