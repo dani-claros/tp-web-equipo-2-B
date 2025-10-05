@@ -24,7 +24,7 @@ namespace TPPromoWeb_equipo_2B
                     Voucher = (Voucher)Session["Voucher"];
                     //seteo lista de articulos
                     ArticuloNegocio articuloNegocio = new ArticuloNegocio();
-                    
+
                     ListaArticulos = articuloNegocio.Listar();
 
                     repArticulos.DataSource = ListaArticulos;
@@ -66,6 +66,30 @@ namespace TPPromoWeb_equipo_2B
             }
 
             return sb.ToString();
+        }
+
+        protected void repArticulos_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "Seleccionar")
+            {
+                lblError.Visible = false;
+
+                int idArticuloSeleccionado = int.Parse(e.CommandArgument.ToString());
+
+                try
+                {
+                    Session["IdArticuloSeleccionado"] = idArticuloSeleccionado;
+
+                    Session["IdCliente"] = null;
+
+                    Response.Redirect("ValidarDatos.aspx", false);
+                }
+                catch (Exception ex)
+                {
+                    lblError.Text = "Ocurrió un error al seleccionar el artículo: " + ex.Message;
+                    lblError.Visible = true;
+                }
+            }
         }
     }
 }

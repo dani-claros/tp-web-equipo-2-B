@@ -8,11 +8,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <main>
         <h2>Selecciona Tu Articulo:  </h2>
-  
+        <asp:Label ID="lblError" runat="server" 
+                   Text="" 
+                   Visible="false" 
+                   CssClass="alert alert-danger" />
         
         <div class="row row-cols-1 row-cols-md-3 g-4">
             
-            <asp:Repeater ID="repArticulos" runat="server">
+            <asp:Repeater ID="repArticulos" runat="server" OnItemCommand="repArticulos_ItemCommand">
     <ItemTemplate>
         <div class="col">
             <div class="card" style="width: 18rem;">
