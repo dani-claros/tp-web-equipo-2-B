@@ -117,6 +117,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="ParticipacionExitosa.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -194,6 +195,10 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ParticipacionExitosa.aspx.cs">
+      <DependentUpon>ParticipacionExitosa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SeleccionPremio.aspx.cs">
       <DependentUpon>SeleccionPremio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -128,6 +128,30 @@ namespace TPPromoWeb_equipo_2B
 
             if (!valido)
                 return;
+
+       
+            ClienteNegocio negocio = new ClienteNegocio();
+            Cliente nuevoCliente = new Cliente()
+            {
+                Nombre = txtNombre.Text.Trim(),
+                Apellido = txtApellido.Text.Trim(),
+                Email = txtEmail.Text.Trim(),
+                Direccion = txtDireccion.Text.Trim(),
+                Ciudad = txtCiudad.Text.Trim(),
+                CP = int.Parse(txtCP.Text.Trim()),
+                Documento = txtDNI.Text.Trim()
+            };
+
+            // si no existe, lo registramos
+
+            if (Session["IdCliente"] == null)
+            {
+                negocio.RegistrarCliente(nuevoCliente);
+            }
+
+
+
+            Response.Redirect("ParticipacionExitosa.aspx");
         }
     }
 }

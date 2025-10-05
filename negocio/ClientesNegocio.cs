@@ -159,6 +159,36 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void RegistrarCliente(Cliente nuevoCliente)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"INSERT INTO CLIENTES (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP)
+                               VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP)");
+
+                datos.setearParametros("@Documento", nuevoCliente.Documento);
+                datos.setearParametros("@Nombre", nuevoCliente.Nombre);
+                datos.setearParametros("@Apellido", nuevoCliente.Apellido);
+                datos.setearParametros("@Email", nuevoCliente.Email);
+                datos.setearParametros("@Direccion", nuevoCliente.Direccion);
+                datos.setearParametros("@Ciudad", nuevoCliente.Ciudad);
+                datos.setearParametros("@CP", nuevoCliente.CP);
+
+                datos.ejecutarAccion(); 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
 
