@@ -10,34 +10,40 @@ namespace TPPromoWeb_equipo_2B
     {
         public Voucher Voucher { get; set; } = new Voucher();
         public List<Articulo> ListaArticulos { get; set; } = null;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                // Control: si entran directo por URL sin voucher validado, los saca
                 if (Session["Voucher"] == null)
                 {
-                    // Control: si acceden directo desde la url sin validación, redirige a Default
                     Response.Redirect("Default.aspx");
+                    return;
                 }
-                else
-                {
-                    Voucher = (Voucher)Session["Voucher"];
-                    //seteo lista de articulos
-                    ArticuloNegocio articuloNegocio = new ArticuloNegocio();
 
+                // Recuperar voucher de sesión
+                Voucher = (Voucher)Session["Voucher"];
+
+                // Cargar artículos disponibles
+                try
+                {
+                    ArticuloNegocio articuloNegocio = new ArticuloNegocio();
                     ListaArticulos = articuloNegocio.Listar();
 
                     repArticulos.DataSource = ListaArticulos;
                     repArticulos.DataBind();
-                    // --- Voucher ---
-
-
-
-
+                }
+                catch (Exception ex)
+                {
+                    lblError.Visible = true;
+                    lblError.Text = "Error al cargar los artículos: " + ex.Message;
                 }
             }
         }
-        protected string GetCarouselItems(modelo.Articulo articulo)
+
+        // Renderiza dinámicamente las imágenes del artículo dentro del carrusel Bootstrap
+        protected string GetCarouselItems(Articulo articulo)
         {
             var sb = new System.Text.StringBuilder();
 
@@ -49,61 +55,49 @@ namespace TPPromoWeb_equipo_2B
                     string activeClass = (i == 0) ? "active" : "";
 
                     sb.Append($@"
-                <div class='carousel-item {activeClass}'>
-                    <img src='{img.ImagenURL}' class='d-block w-100' style='object-fit:contain; height:200px; background-color:#f8f9fa;' alt='Imagen {i + 1}' />
-                </div>");
+                        <div class='carousel-item {activeClass}'>
+                            <img src='{img.ImagenURL}' 
+                                 class='d-block w-100' 
+                                 style='object-fit:contain; height:200px; background-color:#f8f9fa;' 
+                                 alt='Imagen {i + 1}' />
+                        </div>");
                 }
             }
             else
             {
-                sb.Append($@"
-            <div class='carousel-item active'>
-                <img src='https://distribuidoramiyi.com.ar/products/no_product.png' 
-                     class='d-block w-100' 
-                     style='object-fit:contain; height:200px; background-color:#f8f9fa;' 
-                     alt='Sin imagen' />
-            </div>");
+                sb.Append(@"
+                    <div class='carousel-item active'>
+                        <img src='https://distribuidoramiyi.com.ar/products/no_product.png' 
+                             class='d-block w-100' 
+                             style='object-fit:contain; height:200px; background-color:#f8f9fa;' 
+                             alt='Sin imagen' />
+                    </div>");
             }
 
             return sb.ToString();
         }
 
+        // Evento del botón "Seleccionar"
         protected void repArticulos_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             if (e.CommandName == "Seleccionar")
             {
                 lblError.Visible = false;
 
-                int idArticuloSeleccionado = int.Parse(e.CommandArgument.ToString());
-
                 try
                 {
-                    int idCliente;
+                    int idArticuloSeleccionado = Convert.ToInt32(e.CommandArgument);
 
-                    Voucher voucher = (Voucher)Session["Voucher"];
-
-                    if (voucher.Cliente != null)
-                    {
-                        idCliente = voucher.Cliente.Id;
-                    }
-                    else
-                    {
-                        idCliente = 9999; // <--- USAR EL ID DE CLIENTE TEMPORAL
-                    }
-
-                    VoucherNegocio negocio = new VoucherNegocio();
-                    negocio.CanjearVoucher(voucher.CodigoVoucher, idArticuloSeleccionado, idCliente);
-
-                    
+                    // Guardamos la información necesaria en sesión
                     Session["IdArticuloSeleccionado"] = idArticuloSeleccionado;
-                    Session["IdCliente"] = voucher.Cliente?.Id;
 
+                    // Redirigir a la página de ValidarDatos
                     Response.Redirect("ValidarDatos.aspx", false);
                 }
                 catch (Exception ex)
                 {
-                    lblError.Text = "Ocurrió un error al seleccionar el artículo: " + ex.Message;
                     lblError.Visible = true;
+                    lblError.Text = "Ocurrió un error al seleccionar el artículo: " + ex.Message;
                 }
             }
         }

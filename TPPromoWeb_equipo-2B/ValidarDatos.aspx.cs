@@ -1,19 +1,26 @@
 ﻿using modelo;
 using negocio;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Text.RegularExpressions;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace TPPromoWeb_equipo_2B
 {
-    public partial class ValidarDatos : System.Web.UI.Page
+    public partial class ValidarDatos : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                // Validación de acceso directo o sesión inválida
+                if (Session["Voucher"] == null || Session["IdArticuloSeleccionado"] == null)
+                {
+                    // Limpieza por seguridad
+                    LimpiarSesion();
+                    Response.Redirect("Default.aspx");
+                    return;
+                }
+            }
         }
 
         protected void BtnBuscarDNI_Click(object sender, EventArgs e)
@@ -50,23 +57,17 @@ namespace TPPromoWeb_equipo_2B
 
                 txtDNI.Enabled = false;
 
+                // Guardamos el ID del cliente ya existente
                 Session["IdCliente"] = clienteEncontrado.Id;
             }
             else
             {
-                txtNombre.Text = string.Empty;
-                txtApellido.Text = string.Empty;
-                txtEmail.Text = string.Empty;
-                txtDireccion.Text = string.Empty;
-                txtCiudad.Text = string.Empty;
-                txtCP.Text = string.Empty;
+                // Limpiar y habilitar campos para un nuevo cliente
+                txtNombre.Text = txtApellido.Text = txtEmail.Text =
+                txtDireccion.Text = txtCiudad.Text = txtCP.Text = string.Empty;
 
-                txtNombre.Enabled = true;
-                txtApellido.Enabled = true;
-                txtEmail.Enabled = true;
-                txtDireccion.Enabled = true;
-                txtCiudad.Enabled = true;
-                txtCP.Enabled = true;
+                txtNombre.Enabled = txtApellido.Enabled = txtEmail.Enabled =
+                txtDireccion.Enabled = txtCiudad.Enabled = txtCP.Enabled = true;
 
                 Session["IdCliente"] = null;
             }
@@ -76,82 +77,97 @@ namespace TPPromoWeb_equipo_2B
         {
             bool valido = true;
 
-            lblErrorNombre.Visible = false;
-            lblErrorApellido.Visible = false;
-            lblErrorEmail.Visible = false;
-            lblErrorDireccion.Visible = false;
-            lblErrorCiudad.Visible = false;
-            lblErrorCP.Visible = false;
+            // Reset de labels de error
+            lblErrorNombre.Visible = lblErrorApellido.Visible =
+            lblErrorEmail.Visible = lblErrorDireccion.Visible =
+            lblErrorCiudad.Visible = lblErrorCP.Visible = false;
 
+            // Validaciones básicas
             if (txtNombre.Enabled && string.IsNullOrEmpty(txtNombre.Text.Trim()))
-            {
-                lblErrorNombre.Text = "Campo obligatorio!";
-                lblErrorNombre.Visible = true; 
-                valido = false;
-            }
+            { lblErrorNombre.Visible = true; valido = false; }
 
-            if(txtApellido.Enabled && string.IsNullOrEmpty(txtApellido.Text.Trim()))
-            {
-                lblErrorApellido.Text = "Campo obligatorio!";
-                lblErrorApellido.Visible = true; 
-                valido = false;
-            }
+            if (txtApellido.Enabled && string.IsNullOrEmpty(txtApellido.Text.Trim()))
+            { lblErrorApellido.Visible = true; valido = false; }
 
             string patronEmail = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            if (txtEmail.Enabled && (string.IsNullOrEmpty(txtEmail.Text.Trim()) || !System.Text.RegularExpressions.Regex.IsMatch(txtEmail.Text.Trim(), patronEmail)))
-            {
-                lblErrorEmail.Text = "Formato de email incorrecto - Campo obligatorio!";
-                lblErrorEmail.Visible = true; 
-                valido = false;
-            }
+            if (txtEmail.Enabled && (string.IsNullOrEmpty(txtEmail.Text.Trim()) || !Regex.IsMatch(txtEmail.Text.Trim(), patronEmail)))
+            { lblErrorEmail.Visible = true; valido = false; }
 
             if (txtDireccion.Enabled && string.IsNullOrEmpty(txtDireccion.Text.Trim()))
-            {
-                lblErrorDireccion.Text = "Campo obligatorio!";
-                lblErrorDireccion.Visible = true; 
-                valido = false;
-            }
+            { lblErrorDireccion.Visible = true; valido = false; }
 
             if (txtCiudad.Enabled && string.IsNullOrEmpty(txtCiudad.Text.Trim()))
-            {
-                lblErrorCiudad.Text = "Campo obligatorio!";
-                lblErrorCiudad.Visible = true; 
-                valido = false;
-            }
+            { lblErrorCiudad.Visible = true; valido = false; }
 
             if (txtCP.Enabled && (string.IsNullOrEmpty(txtCP.Text.Trim()) || !int.TryParse(txtCP.Text.Trim(), out int cp) || cp <= 0))
-            {
-                lblErrorCP.Text = "Formato incorrecto - Campo obligatorio!";
-                lblErrorCP.Visible = true; 
-                valido = false;
-            }
+            { lblErrorCP.Visible = true; valido = false; }
 
             if (!valido)
                 return;
 
-       
-            ClienteNegocio negocio = new ClienteNegocio();
-            Cliente nuevoCliente = new Cliente()
+            try
             {
-                Nombre = txtNombre.Text.Trim(),
-                Apellido = txtApellido.Text.Trim(),
-                Email = txtEmail.Text.Trim(),
-                Direccion = txtDireccion.Text.Trim(),
-                Ciudad = txtCiudad.Text.Trim(),
-                CP = int.Parse(txtCP.Text.Trim()),
-                Documento = txtDNI.Text.Trim()
-            };
+                ClienteNegocio negocioCliente = new ClienteNegocio();
+                VoucherNegocio negocioVoucher = new VoucherNegocio();
 
-            // si no existe, lo registramos
+                int idCliente;
 
-            if (Session["IdCliente"] == null)
-            {
-                negocio.RegistrarCliente(nuevoCliente);
+                // Si el cliente no existe, lo registramos
+                if (Session["IdCliente"] == null)
+                {
+                    Cliente nuevoCliente = new Cliente()
+                    {
+                        Nombre = txtNombre.Text.Trim(),
+                        Apellido = txtApellido.Text.Trim(),
+                        Email = txtEmail.Text.Trim(),
+                        Direccion = txtDireccion.Text.Trim(),
+                        Ciudad = txtCiudad.Text.Trim(),
+                        CP = int.Parse(txtCP.Text.Trim()),
+                        Documento = txtDNI.Text.Trim()
+                    };
+
+                    idCliente = negocioCliente.RegistrarCliente(nuevoCliente);
+                }
+                else
+                {
+                    idCliente = (int)Session["IdCliente"];
+                }
+
+                // 🔍 Validamos sesión antes de canjear
+                if (Session["Voucher"] == null || Session["IdArticuloSeleccionado"] == null)
+                {
+                    lblErrorDNI.Text = "La sesión expiró. Por favor, volvé a iniciar el proceso.";
+                    lblErrorDNI.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
+
+                // Recuperamos datos de sesión
+                var voucher = (Voucher)Session["Voucher"];
+                int idArticulo = (int)Session["IdArticuloSeleccionado"];
+                string codigoVoucher = voucher.CodigoVoucher;
+
+                // Realizamos el canje del voucher
+                negocioVoucher.CanjearVoucher(codigoVoucher, idArticulo, idCliente);
+
+                // 🧹 Limpiamos la sesión después del canje exitoso
+                LimpiarSesion();
+
+                // Redirigimos al usuario a la pantalla de éxito
+                Response.Redirect("ParticipacionExitosa.aspx", false);
             }
+            catch (Exception ex)
+            {
+                lblErrorDNI.Text = "Ocurrió un error al procesar el canje: " + ex.Message;
+                lblErrorDNI.ForeColor = System.Drawing.Color.Red;
+            }
+        }
 
-
-
-            Response.Redirect("ParticipacionExitosa.aspx");
+        // 🧹 Método auxiliar para limpiar variables de sesión
+        private void LimpiarSesion()
+        {
+            Session.Remove("Voucher");
+            Session.Remove("IdArticuloSeleccionado");
+            Session.Remove("IdCliente");
         }
     }
 }

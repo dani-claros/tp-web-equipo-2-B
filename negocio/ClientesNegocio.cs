@@ -167,7 +167,7 @@ namespace negocio
             try
             {
                 datos.setearConsulta(@"INSERT INTO CLIENTES (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP)
-                                    VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP));
+                                    VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP);
                                     SELECT SCOPE_IDENTITY()");
 
                 datos.setearParametros("@Documento", nuevoCliente.Documento);
@@ -185,7 +185,7 @@ namespace negocio
             catch (Exception ex)
             {
                 throw ex;
-            }s
+            }
             finally
             {
                 datos.cerrarConexion();
