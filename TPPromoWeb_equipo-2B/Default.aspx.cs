@@ -39,7 +39,7 @@ namespace TPPromoWeb_equipo_2B
                 // Mostrar mensaje de error o redirigir
                 Session["CodigoIngresado"] = codigo;
                 Response.Redirect("InvalidVoucher.aspx");
-         }
+            }
         }
        }
 }

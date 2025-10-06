@@ -12,7 +12,8 @@
                 <h1 id="invalidVoucherTitle" class="text-danger">⚠ Código Inválido</h1>
                <p class="lead">
                 El código "<%=Codigo %>" que ingresaste no es válido.
-                    </p>
+                </p>
+                <p>¡Pudo haber sido ya canjeado!</p>
                 <p>Por favor, verificá el número y volvé a intentarlo.</p>
 
                 <br />

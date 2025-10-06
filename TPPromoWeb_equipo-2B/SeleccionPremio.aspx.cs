@@ -78,9 +78,15 @@ namespace TPPromoWeb_equipo_2B
 
                 try
                 {
-                    Session["IdArticuloSeleccionado"] = idArticuloSeleccionado;
+                    
+                    Voucher voucher = (Voucher)Session["Voucher"];
 
-                    Session["IdCliente"] = null;
+                    VoucherNegocio negocio = new VoucherNegocio();
+                    negocio.CanjearVoucher(voucher.CodigoVoucher, idArticuloSeleccionado);
+
+                    
+                    Session["IdArticuloSeleccionado"] = idArticuloSeleccionado;
+                    Session["IdCliente"] = voucher.Cliente?.Id;
 
                     Response.Redirect("ValidarDatos.aspx", false);
                 }

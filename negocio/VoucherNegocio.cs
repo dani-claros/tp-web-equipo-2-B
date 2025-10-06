@@ -12,7 +12,7 @@ namespace negocio
             ClienteNegocio clienteNegocio = new ClienteNegocio();
             try
             {
-                datos.setearConsulta("SELECT CodigoVoucher, IdCliente, FechaCanje, IdArticulo FROM Vouchers WHERE CodigoVoucher = @codigo");
+                datos.setearConsulta("SELECT CodigoVoucher, IdCliente, FechaCanje, IdArticulo FROM Vouchers WHERE CodigoVoucher = @codigo AND FechaCanje IS NULL");
                 datos.setearParametros("@codigo", codigo);
                 datos.ejecutarLectura();
 
@@ -60,5 +60,28 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void CanjearVoucher(string codigo, int idArticulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Vouchers SET FechaCanje = @fecha, IdArticulo = @idArticulo WHERE CodigoVoucher = @codigo");
+                datos.setearParametros("@fecha", DateTime.Now);
+                datos.setearParametros("@idArticulo", idArticulo);
+                datos.setearParametros("@codigo", codigo);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
     }
 }
