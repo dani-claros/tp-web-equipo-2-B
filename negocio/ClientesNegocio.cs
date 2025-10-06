@@ -160,14 +160,15 @@ namespace negocio
             }
         }
 
-        public void RegistrarCliente(Cliente nuevoCliente)
+        public int RegistrarCliente(Cliente nuevoCliente)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
                 datos.setearConsulta(@"INSERT INTO CLIENTES (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP)
-                               VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP)");
+                                    VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP));
+                                    SELECT SCOPE_IDENTITY()");
 
                 datos.setearParametros("@Documento", nuevoCliente.Documento);
                 datos.setearParametros("@Nombre", nuevoCliente.Nombre);
@@ -177,12 +178,14 @@ namespace negocio
                 datos.setearParametros("@Ciudad", nuevoCliente.Ciudad);
                 datos.setearParametros("@CP", nuevoCliente.CP);
 
-                datos.ejecutarAccion(); 
+                datos.ejecutarAccion();
+
+                return datos.ejecutarAccionScalar();
             }
             catch (Exception ex)
             {
                 throw ex;
-            }
+            }s
             finally
             {
                 datos.cerrarConexion();

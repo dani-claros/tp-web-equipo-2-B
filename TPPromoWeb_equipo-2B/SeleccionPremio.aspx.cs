@@ -78,11 +78,21 @@ namespace TPPromoWeb_equipo_2B
 
                 try
                 {
-                    
+                    int idCliente;
+
                     Voucher voucher = (Voucher)Session["Voucher"];
 
+                    if (voucher.Cliente != null)
+                    {
+                        idCliente = voucher.Cliente.Id;
+                    }
+                    else
+                    {
+                        idCliente = 9999; // <--- USAR EL ID DE CLIENTE TEMPORAL
+                    }
+
                     VoucherNegocio negocio = new VoucherNegocio();
-                    negocio.CanjearVoucher(voucher.CodigoVoucher, idArticuloSeleccionado);
+                    negocio.CanjearVoucher(voucher.CodigoVoucher, idArticuloSeleccionado, idCliente);
 
                     
                     Session["IdArticuloSeleccionado"] = idArticuloSeleccionado;
